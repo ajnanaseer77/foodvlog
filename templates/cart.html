@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Avodha Shopping</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+    <link rel="stylesheet" href="https://mdbootstrap.com/docs/standard/extended/shopping-carts/#mdb_dba88acc7e4a8159f4bffe2140a1c9242a90e98d">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<section class="h-100" style="background-color: #eee;">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+
+        </div>
+
+{% for i in ci %}
+        <div class="card rounded-3 mb-4">
+          <div class="card-body p-4">
+
+            <div class="row d-flex justify-content-between align-items-center">
+
+    <div class="col-md-2 col-lg-2 col-xl-2">
+
+        <a href="{{i.prodt.get_url}}"><img src="{{i.prodt.img.url}}" class="img-fluid rounded-3" alt="{{ i.prodt.name }}" style="width:200px;height:200px;"></a>
+
+    </div>
+
+              <div class="col-md-3 col-lg-3 col-xl-3">
+                  <a href="{{i.prodt.get_url}}"><p class="lead fw-normal mb-2">{{i.prodt.name}}</p></a>
+                <h5 class="mb-2">ID:{{i.prodt.id}}</h5>
+                <h5 class="mb-2">Qty:{{i.quan}}</h5>
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                <button class="btn btn-link px-2"
+                  onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                    <a href="{% url 'cart_decrement' i.prodt.id %}"><i class="fa fa-minus-circle"></i></a>
+                </button>
+
+                <input id="form1" min="0" name="quantity" value="{{i.quan}}" type="number"
+                  class="form-control form-control-sm" />
+
+                <button class="btn btn-link px-2"
+                  onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                  <a href="{% url 'addcart' i.prodt.id %}"><i class="fa fa-plus-circle"></i></a>
+                </button>
+              </div>
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <h5 class="mb-0">PRICE:{{i.total}}</h5>
+              </div>
+              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                <a href="{% url 'remove' i.prodt.id %}" class="text-danger"><i class="glyphicon glyphicon-trash"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+          <div align="right">
+              <p><span class="price" style="color:black"><b>Total:{{t}}</b></span> </p>
+          </div>
+
+        <div class="card">
+          <div class="card-body">
+            <button type="button" class="btn btn-warning btn-block btn-lg">Proceed to Pay</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
+{% endblock %}
